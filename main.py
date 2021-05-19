@@ -15,9 +15,8 @@ def publish_status(state, topic):
 
     global mqtt
 
-    state_topic = topic.format('state')
-    state_payload = json.dumps({'status': state.status})
-    mqtt.publish(state_topic, state_payload, qos=1, retain=True)
+    payload = json.dumps(state.attributes)
+    mqtt.publish(topic, payload, qos=1, retain=True)
 
 
 def main():
