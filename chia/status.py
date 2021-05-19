@@ -135,13 +135,13 @@ class FarmStatus:
     def attributes(self) -> dict:
 
         return {
-            'farmingStatus': self._status,
-            'totalChiaFarmed': self._total_farmed,
-            'userTransactionFees': self._transaction_fees,
-            'blockRewards': self._block_rewards,
-            'lastHeightFarmed': self._last_height,
-            'plotCount': self._plot_count,
-            'totalSizeOfPlots': self._plot_size,
+            'farmingStatus': self.status,
+            'totalChiaFarmed': self.total_farmed,
+            'userTransactionFees': self.transaction_fees,
+            'blockRewards': self.block_rewards,
+            'lastHeightFarmed': self.last_height,
+            'plotCount': self.plot_count,
+            'totalSizeOfPlots': self.plot_size,
         }
 
 
