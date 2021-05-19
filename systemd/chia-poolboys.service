@@ -1,0 +1,11 @@
+[Unit]
+Description=Chia Poolboys
+After=network-online.target mosquitto.service
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/sense/sense-door.py
+
+[Install]
+WantedBy=multi-user.target
