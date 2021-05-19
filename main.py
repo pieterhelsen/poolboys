@@ -32,7 +32,7 @@ def main():
     mqtt_user = config.get('MQTT', 'User')
     mqtt_pass = config.get('MQTT', 'Pass')
     mqtt_port = int(config.get('MQTT', 'Port'))
-    mqtt_topic = config.has_option("STATUS", 'MqttTopic') and config.get("STATUS", 'MqttFarmTopic') or None
+    mqtt_topic = config.has_option("STATUS", 'MqttTopic') and config.get("STATUS", 'MqttTopic') or None
 
     logfile = expanduser(config.get("STATUS", 'Logfile'))
     loglevel = config.get('STATUS', 'Loglevel')
