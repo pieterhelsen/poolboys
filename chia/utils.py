@@ -19,3 +19,10 @@ class ChiaUtils:
 
         clean: str = res[0].replace('.', '')
         return int(clean) * pow(1024, power)
+
+    @staticmethod
+    def size_in_gbytes(size: str) -> int:
+
+        size_in_bytes = ChiaUtils.size_in_bytes(size)
+        size_in_gbytes = size_in_bytes / pow(1024, 3)
+        return round(size_in_gbytes)
