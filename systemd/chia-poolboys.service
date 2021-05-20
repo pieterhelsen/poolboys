@@ -4,8 +4,7 @@ After=network-online.target mosquitto.service
 
 [Service]
 Type=simple
-User=pi
-ExecStart=/usr/bin/python3 /home/pi/sense/sense-door.py
+ExecStart=/usr/bin/python3 ~/poolboys/main.py
 
 [Install]
 WantedBy=multi-user.target

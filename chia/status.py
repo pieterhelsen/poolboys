@@ -141,7 +141,7 @@ class FarmStatus:
             'blockRewards': self.block_rewards,
             'lastHeightFarmed': self.last_height,
             'plotCount': self.plot_count,
-            'totalSizeOfPlots': 5 #ChiaUtils.size_in_gbytes(self.plot_size),
+            'totalSizeOfPlots': ChiaUtils.size_in_gbytes(self.plot_size),
         }
 
 
