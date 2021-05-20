@@ -34,7 +34,7 @@ delegate(){
 
 create(){
   template=$1
-  cp "${HOME}${SYSD}/${template}.service" "/etc/systemd/system/${template}.service
+  cp "${HOME}${SYSD}/${template}.service" "/etc/systemd/system/${template}.service"
   sed -i "s|CHIA|${chia_dir}|g" "/etc/systemd/system/${template}.service"
   sed -i "s|PATH|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
   systemctl enable "${template}.service"
