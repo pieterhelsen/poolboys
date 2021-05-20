@@ -10,11 +10,6 @@ delegate(){
   name=$1
   service=$2
 
-  echo "Enter the path to your chia-blockchain directory"
-  read -r chia_dir
-
-  chia_dir="${chia_dir/#\~/$HOME}"
-
   echo "Do you want to install $name? (Y)es/(N)o"
   read -r input
 
@@ -35,7 +30,6 @@ delegate(){
 create(){
   template=$1
   cp "${HOME}${SYSD}/${template}.service" "/etc/systemd/system/${template}.service"
-  sed -i "s|CHIA|${chia_dir}|g" "/etc/systemd/system/${template}.service"
   sed -i "s|PATH|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
   systemctl enable "${template}.service"
   systemctl start "${template}.service"
