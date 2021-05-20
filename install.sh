@@ -10,6 +10,7 @@ delegate(){
   name=$1
   service=$2
 
+  echo "$SCRIPT_DIR"
   echo "Do you want to install $name? (Y)es/(N)o"
   read -r input
 
