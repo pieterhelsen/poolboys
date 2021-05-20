@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # CONSTANTS
-HOME=$PWD
+#HOME=$PWD
 SYSD="/systemd"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
@@ -29,8 +29,14 @@ delegate(){
 
 create(){
   template=$1
-  cp "${HOME}${SYSD}/${template}.service" "/etc/systemd/system/${template}.service"
+  template_path="${SCRIPT_DIR}${SYSD}/${template}.service"
+  cp "${template_path}" "/etc/systemd/system/${template}.service"
   sed -i "s|PATH|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
+
+  if [ -d "${template_path}.d" ]; then
+    cp -r "${template_path}.d" "/etc/systemd/system/"
+  fi
+
   systemctl enable "${template}.service"
   systemctl start "${template}.service"
 }
