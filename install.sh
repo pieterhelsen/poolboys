@@ -2,8 +2,21 @@
 
 # CONSTANTS
 #HOME=$PWD
-SYSD="/systemd"
+LOG_DIR="/var/log/chia"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+CHIA_DIR="${HOME}/chia-blockchain/"
+
+if [ ! -d "${template_path}.d" ]; then
+  echo "Creating log directory: ${LOG_DIR}"
+  mkdir LOG_DIR
+  chown -R "${USER} ${LOG_DIR}"
+fi
+
+if [ ! -d "${HOME}/chia-blockchain/" ]; then
+  echo "Could not find chia-blockchain folder, please enter the path to the folder here."
+  read -r CHIA_DIR
+fi
+
 
 # FUNCTIONS
 delegate(){
@@ -29,14 +42,17 @@ delegate(){
 
 create(){
   template=$1
-  template_path="${SCRIPT_DIR}${SYSD}/${template}.service"
+  template_path="${SCRIPT_DIR}systemd/${template}.service"
   cp "${template_path}" "/etc/systemd/system/${template}.service"
   sed -i "s|PATH|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
+  sed -i "s|CHIA|${CHIA_DIR}|g" "/etc/systemd/system/${template}.service"
 
   if [ -d "${template_path}.d" ]; then
+    echo "Found override directory: ${template_path}.d"
     cp -r "${template_path}.d" "/etc/systemd/system/"
   fi
 
+  systemctl daemon-reload
   systemctl enable "${template}.service"
   systemctl start "${template}.service"
 }
