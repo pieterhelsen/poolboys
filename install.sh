@@ -6,10 +6,10 @@ LOG_DIR="/var/log/chia"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 CHIA_DIR="${HOME}/chia-blockchain/"
 
-if [ ! -d "${template_path}.d" ]; then
+if [ ! -d "${LOG_DIR}" ]; then
   echo "Creating log directory: ${LOG_DIR}"
   mkdir LOG_DIR
-  chown -R "${USER} ${LOG_DIR}"
+  chown -R "${SUDO_USER} ${LOG_DIR}"
 fi
 
 if [ ! -d "${HOME}/chia-blockchain/" ]; then
