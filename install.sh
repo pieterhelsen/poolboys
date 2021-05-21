@@ -42,7 +42,7 @@ delegate(){
 
 create(){
   template=$1
-  template_path="${SCRIPT_DIR}systemd/${template}.service"
+  template_path="${SCRIPT_DIR}/systemd/${template}.service"
   cp "${template_path}" "/etc/systemd/system/${template}.service"
   sed -i "s|PATH|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
   sed -i "s|CHIA|${CHIA_DIR}|g" "/etc/systemd/system/${template}.service"
