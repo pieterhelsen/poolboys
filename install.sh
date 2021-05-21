@@ -8,8 +8,8 @@ CHIA_DIR="${HOME}/chia-blockchain/"
 
 if [ ! -d "${LOG_DIR}" ]; then
   echo "Creating log directory: ${LOG_DIR}"
-  mkdir LOG_DIR
-  chown -R "${SUDO_USER} ${LOG_DIR}"
+  sudo mkdir LOG_DIR
+  sudo chown -R "${SUDO_USER} ${LOG_DIR}"
 fi
 
 if [ ! -d "${HOME}/chia-blockchain/" ]; then
@@ -57,18 +57,18 @@ delegate(){
 create(){
   template=$1
   template_path="${SCRIPT_DIR}/systemd/${template}.service"
-  cp "${template_path}" "/etc/systemd/system/${template}.service"
-  sed -i "s|PATH|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
-  sed -i "s|CHIA|${CHIA_DIR}|g" "/etc/systemd/system/${template}.service"
+  sudo cp "${template_path}" "/etc/systemd/system/${template}.service"
+  sudo sed -i "s|PATH|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
+  sudo sed -i "s|CHIA|${CHIA_DIR}|g" "/etc/systemd/system/${template}.service"
 
   if [ -d "${template_path}.d" ]; then
     echo "Found override directory: ${template_path}.d"
-    cp -r "${template_path}.d" "/etc/systemd/system/"
+    sudo cp -r "${template_path}.d" "/etc/systemd/system/"
   fi
 
-  systemctl daemon-reload
-  systemctl enable "${template}.service"
-  systemctl start "${template}.service"
+  sudo systemctl daemon-reload
+  sudo systemctl enable "${template}.service"
+  sudo systemctl start "${template}.service"
 }
 
 # chia-poolboys
