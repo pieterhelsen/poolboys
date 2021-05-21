@@ -33,7 +33,7 @@ Now create a copy of `config-template.ini` and change the settings accordingly
 Finally, run `install.sh` (with `sudo` privileges) and install the components you need.
 
 ```
-    $ sudo -E ./install.sh
+    $ . ./install.sh
 ```
 
 This will create and start a `systemd` service, which you can control with the following commands:
