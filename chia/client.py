@@ -44,8 +44,6 @@ class MqttClient:
         if self._logger:
             self._logger.error("Disconnected from mqtt: {}".format(rc))
 
-        self.client.loop_stop()
-
     def publish(self, topic, payload=None, qos=0, retain=False, properties=None, logging=True):
 
         if self._logger and logging:

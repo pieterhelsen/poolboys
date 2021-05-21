@@ -3,6 +3,8 @@ import re
 from logging import Logger
 from subprocess import CompletedProcess
 
+from retry import retry
+
 from chia.utils import ChiaUtils
 
 
@@ -152,6 +154,7 @@ class ChiaStatus:
     def set_logger(self, logger:Logger):
         self._logger = logger
 
+    @retry(delay=1, backoff=2, max_delay=120)
     def keys(self) -> FarmKeys:
         result: CompletedProcess = subprocess.run(
             ['chia', 'keys', 'show'], check=True, stdout=subprocess.PIPE, universal_newlines=True
@@ -169,6 +172,7 @@ class ChiaStatus:
 
         return keys
 
+    @retry(delay=1, backoff=2, max_delay=120)
     def farm(self) -> FarmStatus:
         result: CompletedProcess = subprocess.run(
             ['chia', 'farm', 'summary'], check=True, stdout=subprocess.PIPE, universal_newlines=True
