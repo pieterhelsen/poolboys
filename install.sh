@@ -4,7 +4,7 @@
 #HOME=$PWD
 LOG_DIR="/var/log/chia"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-CHIA_DIR="${HOME}/chia-blockchain/"
+CHIA_DIR="${HOME}/chia-blockchain"
 
 # FUNCTIONS
 delegate(){
