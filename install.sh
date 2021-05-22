@@ -32,12 +32,13 @@ create(){
   template=$1
   template_path="${SCRIPT_DIR}/systemd/${template}.service"
   sudo cp "${template_path}" "/etc/systemd/system/${template}.service"
-  sudo sed -i "s|PATH|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
+  sudo sed -i "s|POOL|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
   sudo sed -i "s|CHIA|${CHIA_DIR}|g" "/etc/systemd/system/${template}.service"
 
   if [ -d "${template_path}.d" ]; then
     echo "Found override directory: ${template_path}.d"
     sudo cp -r "${template_path}.d" "/etc/systemd/system/"
+    sudo sed -i "s|POOL|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service.d/override.conf"
     sudo sed -i "s|CHIA|${CHIA_DIR}|g" "/etc/systemd/system/${template}.service.d/override.conf"
   fi
 
@@ -57,12 +58,21 @@ if [ ! -d "${HOME}/chia-blockchain/" ]; then
   read -r CHIA_DIR
 fi
 
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+. ./venv/bin/activate
+
 # Update pip3 to latest version
-sudo python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
 
 # Install dependencies
-sudo pip3 install wheel
-sudo pip3 install -r requirements.txt
+pip3 install wheel && pip3 install -r requirements.txt
+
+# Deactivate virtual environment
+deactivate
+
 
 # chia-poolboys
 delegate "Poolboys Tracker" "chia-poolboys"
