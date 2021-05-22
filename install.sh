@@ -5,6 +5,8 @@
 LOG_DIR="/var/log/chia"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 CHIA_DIR="${HOME}/chia-blockchain"
+POOL_USER=${USER}
+
 
 # FUNCTIONS
 delegate(){
@@ -32,6 +34,7 @@ create(){
   template=$1
   template_path="${SCRIPT_DIR}/systemd/${template}.service"
   sudo cp "${template_path}" "/etc/systemd/system/${template}.service"
+  sudo sed -i "s|PUSER|${POOL_USER}|g" "/etc/systemd/system/${template}.service"
   sudo sed -i "s|POOL|${SCRIPT_DIR}|g" "/etc/systemd/system/${template}.service"
   sudo sed -i "s|CHIA|${CHIA_DIR}|g" "/etc/systemd/system/${template}.service"
 
@@ -50,7 +53,7 @@ create(){
 if [ ! -d "${LOG_DIR}" ]; then
   echo "Creating log directory: ${LOG_DIR}"
   sudo mkdir LOG_DIR
-  sudo chown -R "${SUDO_USER} ${LOG_DIR}"
+  sudo chown -R "${POOL_USER} ${LOG_DIR}"
 fi
 
 if [ ! -d "${HOME}/chia-blockchain/" ]; then

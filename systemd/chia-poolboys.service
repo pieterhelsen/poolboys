@@ -4,6 +4,7 @@ After=network-online.target mosquitto.service
 
 [Service]
 Type=simple
+User=PUSER
 ExecStart=POOL/venv/bin/python3 POOL/main.py
 
 [Install]
