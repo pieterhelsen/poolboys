@@ -157,8 +157,11 @@ class ChiaStatus:
     @retry(delay=1, backoff=2, tries=3, logger=_logger)
     def keys(self) -> FarmKeys:
         result: CompletedProcess = subprocess.run(
-            ['chia', 'keys', 'show'], check=True, stdout=subprocess.PIPE, universal_newlines=True
+            ['chia', 'keys', 'show'], capture_output=True, universal_newlines=True
         )
+
+        if result.stderr:
+            self._logger.warning(f"Encountered error reading keys: {result.stderr}")
 
         lines = result.stdout.splitlines()
         keys = FarmKeys()
@@ -175,8 +178,11 @@ class ChiaStatus:
     @retry(delay=1, backoff=2, tries=3, logger=_logger)
     def farm(self) -> FarmStatus:
         result: CompletedProcess = subprocess.run(
-            ['chia', 'farm', 'summary'], check=True, stdout=subprocess.PIPE, universal_newlines=True
+            ['chia', 'farm', 'summary'], capture_output=True, universal_newlines=True
         )
+
+        if result.stderr:
+            self._logger.warning(f"Encountered error reading farm status: {result.stderr}")
 
         lines = result.stdout.splitlines()
         farm = FarmStatus()
