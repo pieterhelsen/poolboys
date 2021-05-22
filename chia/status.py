@@ -151,10 +151,10 @@ class ChiaStatus:
 
     _logger = None
 
-    def set_logger(self, logger:Logger):
+    def set_logger(self, logger: Logger):
         self._logger = logger
 
-    @retry(delay=1, backoff=2, max_delay=120)
+    @retry(delay=1, backoff=2, max_delay=120, logger=_logger)
     def keys(self) -> FarmKeys:
         result: CompletedProcess = subprocess.run(
             ['chia', 'keys', 'show'], check=True, stdout=subprocess.PIPE, universal_newlines=True
@@ -172,7 +172,7 @@ class ChiaStatus:
 
         return keys
 
-    @retry(delay=1, backoff=2, max_delay=120)
+    @retry(delay=1, backoff=2, max_delay=120, logger=_logger)
     def farm(self) -> FarmStatus:
         result: CompletedProcess = subprocess.run(
             ['chia', 'farm', 'summary'], check=True, stdout=subprocess.PIPE, universal_newlines=True
