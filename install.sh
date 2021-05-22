@@ -57,20 +57,12 @@ if [ ! -d "${HOME}/chia-blockchain/" ]; then
   read -r CHIA_DIR
 fi
 
-# Create virtual environment
-python3 -m venv venv
-
-# Activate virtual environment
-. ./venv/bin/activate
-
 # Update pip3 to latest version
-python3 -m pip install --upgrade pip
+sudo python3 -m pip install --upgrade pip
 
 # Install dependencies
-pip3 install wheel && pip3 install -r requirements.txt
-
-# Deactivate virtual environment
-deactivate
+sudo pip3 install wheel
+sudo pip3 install -r requirements.txt
 
 # chia-poolboys
 delegate "Poolboys Tracker" "chia-poolboys"
