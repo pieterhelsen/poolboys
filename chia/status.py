@@ -215,7 +215,7 @@ class ChiaStatus:
                 self._logger.debug("Found Time To Win: {}".format(time_to_win.group(1)))
                 farm.time_to_win = time_to_win.group(1)
 
-            plot_count = re.search(r'^Plot count: (\w+)', line)
+            plot_count = re.search(r'^Plot count for all harvesters: (\w+)', line)
             if plot_count:
                 self._logger.debug("Found Plot Count: {}".format(plot_count.group(1)))
                 farm.plot_count = int(plot_count.group(1))
